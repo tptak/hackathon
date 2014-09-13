@@ -9,6 +9,8 @@ import java.util.List;
 final class Main {
 
     public static void main(final String[] args) throws IOException, InterruptedException {
+        LetterProducer producer = new LetterProducer(Main.class.getResourceAsStream("/horse.json"));
+
         final ConnectionFactory connectionFactory = connectionFactory();
 
         final WordsConsumer wordsConsumer = new WordsConsumer(
@@ -25,7 +27,9 @@ final class Main {
                 if (words.isEmpty()) {
                     System.out.println("No words found");
                 } else {
-                    publisher.publishLetter('C');
+                    Character letter = producer.nextLetter();
+                    System.out.println(String.format("New letter: %s", letter));
+                    publisher.publishLetter(letter);
                 }
             }
         }
