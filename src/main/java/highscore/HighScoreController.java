@@ -61,15 +61,17 @@ final class HighScoreController {
         executorService.execute(new Runnable() {
             @Override
             public void run() {
-                final String body = gameEndedConsumer.consumeNext();
+                while (true) {
+                    final String body = gameEndedConsumer.consumeNext();
 
-                try {
-                    final GameEnded ended = new ObjectMapper().readValue(body, GameEnded.class);
-                    if (totalScores.containsKey(ended.getId())) {
-                        totalScores.get(ended.getId()).setFinished(true);
+                    try {
+                        final GameEnded ended = new ObjectMapper().readValue(body, GameEnded.class);
+                        if (totalScores.containsKey(ended.getId())) {
+                            totalScores.get(ended.getId()).setFinished(true);
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                } catch (IOException e) {
-                    e.printStackTrace();
                 }
             }
         });
