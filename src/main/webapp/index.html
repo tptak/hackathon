@@ -18,7 +18,7 @@
                         var score = data[i];
                         $($(row)[0]).text(score.id);
                         $($(row)[1]).text(score.score);
-                        if (score.ended) {
+                        if (score.finished) {
                             $(row).attr('class', 'danger');
                         } else {
                             $(row).attr('class', 'success');
