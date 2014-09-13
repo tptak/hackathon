@@ -11,8 +11,8 @@ final class LetterPublisher {
         this.publisher = publisher;
     }
 
-    public void publishLetterForGame(Integer id, final Character letter) {
-        final String message = "{\"id\": " + id + ", \"letter\": \"" + letter + "\"}";
+    public void publishLetterForGame(String id, final Character letter) {
+        final String message = "{\"id\": \"" + id + "\", \"letter\": \"" + letter + "\"}";
         publisher.publish(message);
     }
 }
