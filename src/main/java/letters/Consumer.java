@@ -7,13 +7,13 @@ import com.rabbitmq.client.QueueingConsumer;
 
 import java.io.IOException;
 
-final class Consumer {
+public final class Consumer {
 
     private final QueueingConsumer consumer;
     private final String topic;
 
-    Consumer(final ConnectionFactory factory,
-             final String topic) throws IOException {
+    public Consumer(final ConnectionFactory factory,
+                    final String topic) throws IOException {
         this.topic = topic;
         final Connection connection = factory.newConnection();
         final Channel channel = connection.createChannel();
@@ -24,7 +24,7 @@ final class Consumer {
         channel.basicConsume(queueName, true, consumer);
     }
 
-    String consumeNext() {
+    public String consumeNext() {
         try {
             final String message = new String(consumer.nextDelivery().getBody());
             System.out.printf("Received from %s: '%s'%n", topic, message);
