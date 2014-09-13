@@ -4,12 +4,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rabbitmq.client.ConnectionFactory;
 
 import java.io.IOException;
-import java.util.List;
+import java.util.Collection;
+import java.util.Map;
 
 final class Main {
 
     public static void main(final String[] args) throws IOException, InterruptedException {
-        LetterProducer producer = new LetterProducer(Main.class.getResourceAsStream("/horse.json"));
+        LetterGenerator producer = new LetterGenerator(Main.class.getResourceAsStream("/horse.json"));
 
         final ConnectionFactory connectionFactory = connectionFactory();
 
@@ -20,16 +21,13 @@ final class Main {
         final LetterPublisher publisher = new LetterPublisher(
                 new Publisher(connectionFactory, "letter_created"));
 
-
         while (true) {
-            final List<String> words = wordsConsumer.receiveNextWords();
+            final Map<String, Object> message = wordsConsumer.receiveNextWords();
+            final Integer gameId = (Integer) message.get("id");
+            final Collection<Object> words = (Collection<Object>) message.get("words");
             if (words != null) {
                 if (words.isEmpty()) {
-                    System.out.println("No words found");
-                } else {
-                    Character letter = producer.nextLetter();
-                    System.out.println(String.format("New letter: %s", letter));
-                    publisher.publishLetter(letter);
+                    publisher.publishLetterForGame(gameId, producer.nextLetter());
                 }
             }
         }

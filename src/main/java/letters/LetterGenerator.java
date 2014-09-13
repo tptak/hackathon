@@ -9,16 +9,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-/**
- * Created by pc on 2014-09-13.
- */
-public class LetterProducer {
-
+public class LetterGenerator {
 
     private List<Character> characterList = new ArrayList<Character>();
     private int letterCount = 0;
 
-    public LetterProducer(InputStream dictionary) throws IOException {
+    public LetterGenerator(InputStream dictionary) throws IOException {
         initList(dictionary);
     }
 

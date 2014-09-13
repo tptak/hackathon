@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 final class WordsConsumer {
 
@@ -17,9 +18,9 @@ final class WordsConsumer {
     }
 
     @SuppressWarnings("unchecked")
-    List<String> receiveNextWords() throws IOException {
+    Map<String,Object> receiveNextWords() throws IOException {
         return objectMapper
-                .readValue(consumer.consumeNext(), List.class);
+                .readValue(consumer.consumeNext(), Map.class);
 
     }
 }
