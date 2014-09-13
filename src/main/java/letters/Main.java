@@ -22,7 +22,7 @@ final class Main {
                 new ObjectMapper());
 
         final LetterPublisher publisher = new LetterPublisher(
-                new Publisher(connectionFactory, "letter_created"));
+                new Publisher(connectionFactory, "letter.created"));
 
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         executorService.execute(new Runnable() {
