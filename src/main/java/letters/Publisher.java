@@ -23,6 +23,7 @@ final class Publisher {
 
     public void publish(final String messageBody) {
         try {
+            System.out.printf("Publishing to %s: '%s'%n", topic, messageBody);
             channel.basicPublish("combo", topic, null, messageBody.getBytes());
         } catch (final IOException e) {
             throw new RuntimeException(e);

@@ -10,9 +10,11 @@ import java.io.IOException;
 final class Consumer {
 
     private final QueueingConsumer consumer;
+    private final String topic;
 
     Consumer(final ConnectionFactory factory,
              final String topic) throws IOException {
+        this.topic = topic;
         final Connection connection = factory.newConnection();
         final Channel channel = connection.createChannel();
         final String queueName = channel.queueDeclare().getQueue();
@@ -24,7 +26,9 @@ final class Consumer {
 
     String consumeNext() {
         try {
-            return new String(consumer.nextDelivery().getBody());
+            final String message = new String(consumer.nextDelivery().getBody());
+            System.out.printf("Received from %s: '%s'%n", topic, message);
+            return message;
         } catch (final InterruptedException e) {
             throw new RuntimeException(e);
         }
