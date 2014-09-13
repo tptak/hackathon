@@ -12,11 +12,11 @@ final class Main {
         final ConnectionFactory connectionFactory = connectionFactory();
 
         final WordsConsumer wordsConsumer = new WordsConsumer(
-                new Consumer(connectionFactory, "words.found"),
+                new Consumer(connectionFactory, "words_found"),
                 new ObjectMapper());
 
         final LetterPublisher publisher = new LetterPublisher(
-                new Publisher(connectionFactory, "letter.created"));
+                new Publisher(connectionFactory, "letter_created"));
 
 
         while (true) {
